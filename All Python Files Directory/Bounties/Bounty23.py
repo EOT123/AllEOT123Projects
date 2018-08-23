@@ -1,0 +1,4 @@
+# Extinction
+input()
+dino = "Dinosaur"
+
