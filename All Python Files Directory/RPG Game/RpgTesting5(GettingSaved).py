@@ -18,8 +18,7 @@ import os
 # import pickle
 import shelve
 import time
-from Actors_3 import player, Creature
-import Rooms
+from Actors_5 import player, Creature
 
 ZONENAME = ''
 DESCRIPTION = 'description'
@@ -308,17 +307,21 @@ inventory = []
 
 def title_screen_selection():
     option = input("> ")
-    if option.lower() == "play":
+    if option.lower() == "new game":
         setup_game()
+    elif option.lower() == "continue":
+        continue_save()
     elif option.lower() == "help":
         help_menu()
     elif option.lower() == "quit":
         quit_game_1()
-    while option.lower() not in ['play', 'help', 'quit']:
+    while option.lower() not in ['new game', 'help', 'quit']:
         print("Please Enter A Valid Command")
         option = input("> ")
-        if option.lower() == "play":
+        if option.lower() == "new game":
             setup_game()
+        elif option.lower() == "continue":
+            continue_save()
         elif option.lower() == "help":
             help_menu()
         elif option.lower() == "quit":
@@ -329,10 +332,25 @@ def title_screen():
     print('__________________________________')
     print('_ Welcome To The Random Text RPG _')
     print('__________________________________')
-    print('             _ Play _             ')
+    print('           _ Continue _           ')
+    print('           _ New Game _           ')
     print('             _ Help _             ')
     print('             _ Quit _             ')
     title_screen_selection()
+
+
+def continue_save():
+    continue_action = input("\nWhich Save Do You Want To Load?\n" + '> ')
+    acceptable_continue = ['save 1', 'save 2', 'save 3']
+    while continue_action.lower() not in acceptable_continue:
+        print('Unknown Action')
+        continue_action = input("Which Save Do You Want To Load?\n" + '> ')
+    if continue_action in ['save 1']:
+        pass
+    elif continue_action in ['save 2']:
+        pass
+    elif continue_action in ['save 3']:
+        pass
 
 
 def help_menu():
@@ -652,8 +670,14 @@ def game_loop():
 
 
 def setup_game():
+    question0 = "Starting New Game.\n"
+    for character in question0:
+        sys.stdout.write(character)
+        sys.stdout.flush()
+        time.sleep(0.05)
+
     """Name Collecting"""
-    question1 = "Hello What Is Your Name?\n"
+    question1 = "What Is Your Name?\n"
     for character in question1:
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -673,15 +697,14 @@ def setup_game():
         sys.stdout.flush()
         time.sleep(0.01)
     player_job = input("> ")
-    valid_jobs = ['assault', 'Assault', 'ASSAULT', 'sniper', 'SNIPER', 'Sniper', 'mage', 'Mage', 'MAGE', 'heavy',
-                  'Heavy', 'HEAVY', 'test_to_long_to_type', 'Test_to_long_to_type', 'TEST_TO_LONG_TO_TYPE']
-    if player_job.lower() in valid_jobs:
+    valid_jobs = ['assault', 'sniper', 'mage', 'heavy', 'test_to_long_to_type']
+    if player_job.lower() or player_job.title() in valid_jobs:
         myPlayer.job = player_job
         print("You Are Now A " + player_job.title() + ".\n")
     while player_job.lower() not in valid_jobs:
         print("Not A Valid Class, Try Again")
         player_job = input("> ")
-        if player_job.lower() in valid_jobs:
+        if player_job.lower() or player_job.title() in valid_jobs:
             myPlayer.job = player_job
             print("You Are Now A " + player_job.title() + ".\n")
 
@@ -708,7 +731,7 @@ def setup_game():
         sys.stdout.write(character)
         sys.stdout.flush()
         time.sleep(0.05)
-    if player_job == 'assault' or 'Assault' or 'ASSAULT':
+    if player_job == 'assault':
         question3assault = "(You Can Choose A Assault Rifle, Sword)\n"
         for character in question3assault:
             sys.stdout.write(character)
@@ -716,7 +739,7 @@ def setup_game():
             time.sleep(0.01)
         player_weapon = input("> ")
         valid_weapon_assault = ['assault rifle', 'rifle', 'sword']
-        if player_weapon.lower() in ['assault rifle', 'rifle']:
+        if player_weapon.lower() or player_weapon.title() in ['assault rifle', 'rifle']:
             player_weapon = 'assault rifle'
             myPlayer.weapon = player_weapon
         elif player_weapon.lower() in ['sword']:
@@ -733,7 +756,7 @@ def setup_game():
                 player_weapon = 'sword'
                 myPlayer.weapon = player_weapon
             print("You Are Wielding A " + player_weapon.title() + ".\n")
-    elif player_job == 'sniper' or 'Sniper' or 'SNIPER':
+    elif player_job == 'sniper':
         question3sniper = "(You Can Choose A Standard Sniper, Pulse Sniper MKI)\n"
         for character in question3sniper:
             sys.stdout.write(character)
@@ -760,7 +783,7 @@ def setup_game():
                 player_weapon = 'pulse sniper MKI'
                 myPlayer.weapon = player_weapon
             print("You Are Wielding A " + player_weapon.title() + ".\n")
-    elif player_job == 'mage' or 'Mage' or 'MAGE':
+    elif player_job == 'mage':
         question3mage = "(You Can Choose A Staff, Spellbook)\n"
         for character in question3mage:
             sys.stdout.write(character)
@@ -785,7 +808,7 @@ def setup_game():
                 player_weapon = 'spellbook'
                 myPlayer.weapon = player_weapon
             print("You Are Wielding A " + player_weapon.title() + ".\n")
-    elif player_job == 'heavy' or 'Heavy' or 'HEAVY':
+    elif player_job == 'heavy':
         question3heavy = "(You Can Choose A Minigun, LMG)\n"
         for character in question3heavy:
             sys.stdout.write(character)
@@ -810,7 +833,7 @@ def setup_game():
                 player_weapon = 'light machine gun'
                 myPlayer.weapon = player_weapon
             print("You Are Wielding A " + player_weapon.title() + ".\n")
-    elif player_job == 'test_to_long_to_type' or 'Test_to_long_to_type' or 'TEST_TO_LONG_TO_TYPE':
+    elif player_job == 'test_to_long_to_type':
         question3test_to_long_to_type = "(You Can Choose A Demolisher666, NoScoper420, OPNerfGun, BanHammer)\n"
         for character in question3test_to_long_to_type:
             sys.stdout.write(character)
@@ -847,8 +870,10 @@ def setup_game():
                 player_weapon = 'banhammer'
                 myPlayer.weapon = player_weapon
             print("You Are Wielding A " + player_weapon.title() + ".\n")
+
     """Introduction"""
-    question4 = "Welcome, " + player_name + " The " + player_weapon.title() + " Wielding " + player_job.title() + ".\n"
+    question4 = "Welcome, " + player_name + " The " + player_job.title() + " Wielding A " + player_weapon.title() +\
+                ".\n"
     for character in question4:
         sys.stdout.write(character)
         sys.stdout.flush()

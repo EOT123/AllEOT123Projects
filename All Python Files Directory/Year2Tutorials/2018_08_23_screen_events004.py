@@ -15,12 +15,10 @@ def background_color():  # changes background color when "b" pressed
     scr.bgcolor(color)  # changes background to random color
 
 
-def changing_background_color():
+def changing_background_color():  # flashing colors
     color = random.choice(colors)
-    x = 1
-    while True:
+    for variable_k in range(0, 100):
         scr.bgcolor(color)
-        x += 1
 
 
 def little_draw():  # draws a circle when "a" pressed
@@ -80,7 +78,8 @@ def clear():  # clears drawings when "c" pressed
 scr.listen()  # readies screen events
 scr.update()  # refreshes the screen
 scr.onkey(background_color, "b")  # activates background color when "b" pressed
-scr.onkey(changing_background_color, "n")
+scr.onkeypress(changing_background_color, "n")  # dont look at screen
+scr.onkeyrelease(changing_background_color, "n")  # crazy flashing colors
 scr.onkey(little_draw, "a")  # activates little draw when "a" pressed
 scr.onkey(big_draw, "w")  # activates big draw when "w" pressed
 scr.onkey(draw_star, "q")  # activates draw star when "q" pressed
